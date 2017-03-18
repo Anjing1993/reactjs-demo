@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width , initial-scale=1, user-scalable=no">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/react.js"></script>
+    <script src="../js/react-dom.js"></script>
+    <script src="../js/browser.min.js"></script>
+    <style type="text/css">
+    body{
+      height:10000px;
+    }
+      #backTopWrap{
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 70px;
+        height: 70px;
+      }
+      /* pc */
+      .u-backTop{
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          display: block;
+          display: none;
+          width:70px;
+          height:70px;
+          background: black;
+          opacity: .6;
+      }
+      .u-backTop:after{
+        position: absolute;
+        top:50%;
+        margin-top: -10px;
+        left:50%;
+        margin-left: -10px;
+        content: '';
+        width:20px;
+        height:20px;
+        border: 1px solid #fff;
+        border-right: none;
+        border-bottom: none;
+        transform: rotate(45deg);
+      }
+      /* wap */
+      .u-backTop-wap{
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          display: block;
+          display: none;
+          width:60px;
+          height:60px;
+          border-radius: 30px;
+          background: red;
+          opacity: .6;
+      }
+      .u-backTop-wap:after{
+        position: absolute;
+        top:50%;
+        margin-top: -10px;
+        left:50%;
+        margin-left: -10px;
+        content: '';
+        width:20px;
+        height:20px;
+        border: 1px solid #fff;
+        border-right: none;
+        border-bottom: none;
+        transform: rotate(45deg);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 回到顶部组件(可在pc与是适配之间自动转转) -->
+
+    <div id="backTopWrap"></div>
+    <script type="text/babel">
+      var BackTop = React.createClass({
+        render: function(){
+         return (
+          <i className="u-backTop" onClick= {this.backTop} refs="backtop"></i>
+          );
+        },
+        backTop: function(){
+          $('html,body').animate({
+            scrollTop : 0
+          },1000);
+        },
+        componentDidMount: function(){
+          this.scrollJudge(); 
+        },
+        judgeSurroundings: function(target){
+          var system ={
+                win : false,
+                mac : false,
+                xll : false
+              },
+              p = navigator.platform,
+              u = navigator.userAgent;
+
+          system.win = p.indexOf("Win") == 0;
+          system.mac = p.indexOf("Mac") == 0;
+          system.x11 = (p == "X11") || (p.indexOf("Linux") == 0); 
+
+          if(system.win||system.mac||system.xll){
+              target.removeClass('u-backTop-wap').addClass('u-backTop');
+          }else{
+            target.removeClass('u-backTop').addClass('u-backTop-wap')
+          }
+        },
+        scrollJudge: function(){
+          var $goToTop = $(ReactDOM.findDOMNode(this));
+
+          $(window).on('scroll',function(){
+            var _scrollTop = $(document).scrollTop(),
+                _clientH = document.documentElement.clientHeight;
+                
+            if(_scrollTop > _clientH){
+              if($goToTop.is(':hidden')) {
+                $goToTop.show();
+                $goToTop.stop(true, true).fadeIn(200);
+              }
+            }else{
+              if($goToTop.is(':visible')) {
+                $goToTop.stop(true, true).fadeOut(200);
+              }
+            }    
+          });
+          this.judgeSurroundings($goToTop);
+        }
+      });
+      ReactDOM.render(<BackTop />,  document.getElementById('backTopWrap'));
+    </script>
+  </body>
+</html>
