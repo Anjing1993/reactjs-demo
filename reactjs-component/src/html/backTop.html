@@ -73,14 +73,14 @@
     </style>
   </head>
   <body>
-    <!-- 回到顶部组件(可在pc与是适配之间自动转转) -->
-
+    <!-- 回到顶部组件 -->
+    <!-- u-backTop-wap 适配  u-backTop pc-->
     <div id="backTopWrap"></div>
     <script type="text/babel">
       var BackTop = React.createClass({
         render: function(){
          return (
-          <i className="u-backTop" onClick= {this.backTop} refs="backtop"></i>
+          <i className={this.props.class} onClick= {this.backTop} refs="backtop"></i>
           );
         },
         backTop: function(){
@@ -91,25 +91,7 @@
         componentDidMount: function(){
           this.scrollJudge(); 
         },
-        judgeSurroundings: function(target){
-          var system ={
-                win : false,
-                mac : false,
-                xll : false
-              },
-              p = navigator.platform,
-              u = navigator.userAgent;
-
-          system.win = p.indexOf("Win") == 0;
-          system.mac = p.indexOf("Mac") == 0;
-          system.x11 = (p == "X11") || (p.indexOf("Linux") == 0); 
-
-          if(system.win||system.mac||system.xll){
-              target.removeClass('u-backTop-wap').addClass('u-backTop');
-          }else{
-            target.removeClass('u-backTop').addClass('u-backTop-wap')
-          }
-        },
+        
         scrollJudge: function(){
           var $goToTop = $(ReactDOM.findDOMNode(this));
 
@@ -128,10 +110,10 @@
               }
             }    
           });
-          this.judgeSurroundings($goToTop);
+          
         }
       });
-      ReactDOM.render(<BackTop />,  document.getElementById('backTopWrap'));
+      ReactDOM.render(<BackTop class="u-backTop-wap"/>,  document.getElementById('backTopWrap'));
     </script>
   </body>
 </html>
