@@ -18,7 +18,7 @@
         height: 70px;
       }
       /* pc */
-      .u-backTop{
+      /*.u-backTop{
           position: absolute;
           bottom: 0;
           right: 0;
@@ -28,8 +28,22 @@
           height:70px;
           background: black;
           opacity: .6;
-      }
+      }*/
       .u-backTop:after{
+        position: absolute;
+        top:50%;
+        margin-top: -10px;
+        left:50%;
+        margin-left: -10px;
+        content: '';
+        width:20px;
+        height:20px;
+        border: 1px solid #fff;
+        border-right: none;
+        border-bottom: none;
+        transform: rotate(45deg);
+      }
+      .u-backTop-wap:after{
         position: absolute;
         top:50%;
         margin-top: -10px;
@@ -59,7 +73,7 @@
         getDefaultProps: function() {
           return {
             style: {
-              overlay: {
+              default: {
                 position        : 'fixed',
                 right           : 0,
                 bottom          : 0,
@@ -69,14 +83,36 @@
                 width           : '70px',
                 height          : '70px',
                 backgroundColor : 'rgba(0, 0, 0, 0.7)'
+              },
+              defaultWap: {
+                position        : 'fixed',
+                right           : 0,
+                bottom          : 0,
+                zIndex          : 9999,
+                display         : 'block',
+                display         : 'none',  
+                width           : '70px',
+                height          : '70px',
+                borderRadius    : '35px',
+                backgroundColor : 'rgba(0, 0, 0, 0.7)'
               }
-            }
+            },
           };
         },
         render: function(){
-         return (
-          <i className={this.props.class} onClick= {this.backTop} refs="backtop" style ={this.props.style.overlay||{}}>回到顶部</i>
-          );
+          var _calssName = this.props.class;
+          console.log(this.props.userst.split(';'));
+          console.log(this.props.style.default);
+          if(_calssName == 'u-backTop'){
+             return (
+            <i className={this.props.class} onClick= {this.backTop} refs="backtop" style ={this.props.style.default} ></i>
+            );
+          }else if(_calssName == 'u-backTop-wap'){
+             return (
+            <i className={this.props.class} onClick= {this.backTop} refs="backtop" style ={this.props.style.defaultWap||{}}></i>
+            );
+          }
+        
         },
         backTop: function(){
           $('html,body').animate({
@@ -109,7 +145,7 @@
           
         }
       });
-      ReactDOM.render(<BackTop class="u-backTop-wap" />,  document.getElementById('backTopWrap'));
+      ReactDOM.render(<BackTop class="u-backTop" userst="{width:100px;height:100px;}"/>,  document.getElementById('backTopWrap'));
     </script>
   </body>
 </html>
