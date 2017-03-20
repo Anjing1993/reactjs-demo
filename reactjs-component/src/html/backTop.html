@@ -43,44 +43,39 @@
         border-bottom: none;
         transform: rotate(45deg);
       }
-      /* wap */
-      .u-backTop-wap{
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          display: block;
-          display: none;
-          width:60px;
-          height:60px;
-          border-radius: 30px;
-          background: red;
-          opacity: .6;
-      }
-      .u-backTop-wap:after{
-        position: absolute;
-        top:50%;
-        margin-top: -10px;
-        left:50%;
-        margin-left: -10px;
-        content: '';
-        width:20px;
-        height:20px;
-        border: 1px solid #fff;
-        border-right: none;
-        border-bottom: none;
-        transform: rotate(45deg);
-      }
+
     </style>
   </head>
   <body>
-    <!-- 回到顶部组件 -->
+    <!-- 回到顶部组件 1.分为pc与移动端 2.只需引入模板就可用 3.特色样式可自定义-->
+
     <!-- u-backTop-wap 适配  u-backTop pc-->
     <div id="backTopWrap"></div>
     <script type="text/babel">
       var BackTop = React.createClass({
+        propTypes: {
+          class: React.PropTypes.string.isRequired
+        },
+        getDefaultProps: function() {
+          return {
+            style: {
+              overlay: {
+                position        : 'fixed',
+                right           : 0,
+                bottom          : 0,
+                zIndex          : 9999,
+                display         : 'block',
+                display         : 'none',  
+                width           : '70px',
+                height          : '70px',
+                backgroundColor : 'rgba(0, 0, 0, 0.7)'
+              }
+            }
+          };
+        },
         render: function(){
          return (
-          <i className={this.props.class} onClick= {this.backTop} refs="backtop"></i>
+          <i className={this.props.class} onClick= {this.backTop} refs="backtop" style ={this.props.style.overlay||{}}>回到顶部</i>
           );
         },
         backTop: function(){
@@ -89,9 +84,10 @@
           },1000);
         },
         componentDidMount: function(){
+          var _className = this.props.style;
+          console.log(_className);
           this.scrollJudge(); 
         },
-        
         scrollJudge: function(){
           var $goToTop = $(ReactDOM.findDOMNode(this));
 
@@ -113,7 +109,7 @@
           
         }
       });
-      ReactDOM.render(<BackTop class="u-backTop-wap"/>,  document.getElementById('backTopWrap'));
+      ReactDOM.render(<BackTop class="u-backTop-wap" />,  document.getElementById('backTopWrap'));
     </script>
   </body>
 </html>
