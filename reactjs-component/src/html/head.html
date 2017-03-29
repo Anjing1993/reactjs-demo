@@ -31,6 +31,29 @@
         line-height: 24px;
         color: #666;
     }
+    .m-HeadBlock .tip{
+      position: absolute;
+    top: 0;
+    right: -10px;
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    padding: 0 6px;
+    height: 20px;
+    line-height: 20px;
+    background: pink;
+    font-size: 13px;
+    color: #fff;
+    }
+    .m-HeadBlock .tip:before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      bottom: -6px;
+      border-top: 6px solid pink;
+      border-right: 6px solid transparent;
+    }
     </style>
   </head>
   <body>
@@ -58,7 +81,7 @@
           );
         },      
 	  	});
-      ReactDOM.render(<HeadBlock title="哈哈" desc="请挑选你喜欢的"/>, document.getElementById('j-expertIndex'));
+      ReactDOM.render(<HeadBlock title="哈哈" desc="请挑选你喜欢的" tip="精品"/>, document.getElementById('j-expertIndex'));
   	</script>
      <script type="text/javascript">
         
