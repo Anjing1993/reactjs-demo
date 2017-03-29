@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width , initial-scale=1, user-scalable=no">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/react.js"></script>
+    <script src="../js/react-dom.js"></script>
+    <script src="../js/browser.min.js"></script>
+    <style type="text/css">
+    .m-HeadBlock{
+      padding:35px 0 40px;
+      text-align: center;
+    }
+    .m-HeadBlock .title{
+        position: relative;
+        display: inline-block;
+        font-size: 26px;
+        line-height: 1;
+        color: #333;
+        font-weight: normal;
+    }
+    .m-HeadBlock .line{  
+        width: 50px;
+        height: 2px;
+        background: #333;
+        margin: 20px auto 30px;
+        margin-bottom: 12px;
+    }
+    .m-HeadBlock .desc{
+        font-size: 14px;
+        line-height: 24px;
+        color: #666;
+    }
+    </style>
+  </head>
+  <body>
+  <div id="j-expertIndex"></div>
+    <!-- 标题组件 -->
+  	<script type="text/babel">
+  		
+	  	var HeadBlock = React.createClass({
+        getDefaultProps: function() {
+          return {
+            className: ''
+          }
+        },
+        render:function(){
+           var tip = !!this.props.tip ? (<div className="tip">{this.props.tip}</div>) : null;
+           return (
+            <div className={"m-HeadBlock"+ this.props.className}>
+              <h2 className="title">
+                {this.props.title}
+                {tip}
+              </h2>
+              <p className="line"></p>
+              <p className="desc">{this.props.desc}</p>
+            </div>
+          );
+        },      
+	  	});
+      ReactDOM.render(<HeadBlock title="哈哈" desc="请挑选你喜欢的"/>, document.getElementById('j-expertIndex'));
+  	</script>
+     <script type="text/javascript">
+        
+     </script>
+  </body>
+  </html>
